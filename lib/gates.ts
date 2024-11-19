@@ -1,30 +1,33 @@
 import { Equal, Expect } from "../utils/assert.ts";
+import { BinaryDigit } from "./binary.ts";
 
-export type And<A extends boolean, B extends boolean> = A extends true
-  ? B extends true
-    ? true
-    : false
-  : false;
+export type And<A extends BinaryDigit, B extends BinaryDigit> = A extends 1
+  ? B extends 1
+    ? 1
+    : 0
+  : 0;
 
-export type Or<A extends boolean, B extends boolean> = A extends true
-  ? true
-  : B extends true
-    ? true
-    : false;
+export type Or<A extends BinaryDigit, B extends BinaryDigit> = A extends 1
+  ? 1
+  : B extends 1
+    ? 1
+    : 0;
 
-export type Not<A extends boolean> = A extends true ? false : true;
+export type Not<A extends BinaryDigit> = A extends 1 ? 0 : 1;
+
+export type Nand<A extends BinaryDigit, B extends BinaryDigit> = Not<And<A, B>>;
 
 export type Tests = [
-  Expect<Equal<And<false, true>, false>>,
-  Expect<Equal<And<true, false>, false>>,
-  Expect<Equal<And<false, false>, false>>,
-  Expect<Equal<And<true, true>, true>>,
+  Expect<Equal<And<0, 1>, 0>>,
+  Expect<Equal<And<1, 0>, 0>>,
+  Expect<Equal<And<0, 0>, 0>>,
+  Expect<Equal<And<1, 1>, 1>>,
 
-  Expect<Equal<Or<false, true>, true>>,
-  Expect<Equal<Or<true, false>, true>>,
-  Expect<Equal<Or<false, false>, false>>,
-  Expect<Equal<Or<true, true>, true>>,
+  Expect<Equal<Or<0, 1>, 1>>,
+  Expect<Equal<Or<1, 0>, 1>>,
+  Expect<Equal<Or<0, 0>, 0>>,
+  Expect<Equal<Or<1, 1>, 1>>,
 
-  Expect<Equal<Not<true>, false>>,
-  Expect<Equal<Not<false>, true>>,
+  Expect<Equal<Not<1>, 0>>,
+  Expect<Equal<Not<0>, 1>>,
 ];
