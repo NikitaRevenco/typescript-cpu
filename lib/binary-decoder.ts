@@ -6,7 +6,7 @@ import { And, Nand, Not } from "./gates.ts";
  * Returns the N - 1 element of the Options array which must have a length of 4, where N
  * is the processed denary number computer from the first two digits
  */
-type BinaryDecoder2to4<
+export type BinaryDecoder2to4<
   A extends BinaryDigit,
   B extends BinaryDigit,
   Options,
